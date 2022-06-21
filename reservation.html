@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Explore Istanbul</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="reservation.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="navigation">
+                <ul class="menu">
+                    <li><a href="main.html">Main Page</a></li>
+                    <li><a href="toDo.html">Things To Do</a></li>
+                    <li><a href="reservation.html">Reservation for Tour</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="imagemenu">
+            <img id="pic"
+                src="https://images.unsplash.com/photo-1529171696861-bac785a44828?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8dG91cnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
+                alt="">
+        </div>
+
+        <div class="head">
+            <h2>Reservation for Tour</h2>
+            <p>Leave your information and we will make reservations for tours that are suitable for you.</p>
+        </div>
+
+        <div class="reservation">
+
+
+
+            <form class="row g-3">
+
+                <div class="col-md-6">
+                    <label for="title" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">Surname</label>
+                    <input type="text" class="form-control" id="surname">
+                </div>
+
+                <div class="col-md-6">
+                    <br>
+                    <label for="inputEmail4" class="form-label">Passport Number</label>
+                    <input type="text" class="form-control" id="passport">
+                </div>
+
+                <div class="col-md-6">
+                    <br>
+                    <label for="inputCity" class="form-label">Nationality</label>
+                    <input type="text" class="form-control" id="nationality">
+                </div>
+
+
+                <div id="select_div" class="col-md-7">
+                    <br>
+                    <label for="select">Category</label>
+                    <select id="select" class="form-control">
+                        <option selected hidden>Choose...</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <br>
+                    <button type="button" class="btn btn-success"id="save">Save</button>
+                </div>
+
+            </form>
+
+            <br><br>
+            <div class="row w-100 mx-auto mt-2 border border-success p-5">
+                <div class="col-md-6 p-4 text-success">
+                    <div class="clearfix">
+                        <h5 class="float-left">The Book List</h5>
+                        <button id="btnGet" class="btn btn-outline-success float-right">Get List</button>
+                    </div>
+    
+                    <ul id="list" class="list-group list-group-flush mt-4 w-50"></ul>
+    
+                </div>
+    
+                <div class="col-md-6 p-4 text-success border border-success">
+                    <h5>Details...</h5>
+    
+                    <div id="content">
+    
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+
+        </div> 
+
+    </div> 
+
+
+    <script>
+        
+
+        var category = ["Cultural Tour", "Parks", "Architectural Buildings","Museums","Gallery"]
+
+        for (const index in category) {
+            var option = document.createElement("option");
+            var select = document.getElementById("select");
+            option.innerHTML = category[index]
+            select.appendChild(option) 
+        }// buraya kadar sorun yok 
+
+        class Person {
+            constructor(name,surname,passport,nationality,category){
+                this.name=name;
+                this.surname=surname;
+                this.passport=passport;
+                this.nationality=nationality;
+                this.category=category;
+            }
+        }
+
+        var personList = [];
+
+
+        document.querySelector("#save").onclick = function () {
+            var name = document.querySelector("#name").value;
+            var surname = document.querySelector("#surname").value;
+            var passport = document.querySelector("#passport").value
+            var nationality = document.querySelector("#nationality").value
+            var select = document.querySelector("#select");
+            var category = select.options[select.selectedIndex].text;
+
+            var person= new Person(name,surname,passport,nationality,category)
+            personList.push(person);
+            console.log(personList);
+
+            document.querySelector("#btnGet").onclick = function (){
+
+                document.querySelector("#list").innerHTML = "";
+                personList.forEach(per => {
+                    var li = document.createElement("li");
+                    var ulList = document.querySelector("#list");
+                    li.innerHTML = per.name +" "+ per.surname ;  
+                    li.className = "list-group-item list-group-item-action";
+                    ulList.appendChild(li);
+
+                    li.onclick = function () {
+                        var p = document.createElement("p");
+                        p.innerHTML = person.name + " " + person.surname + "</br>" + person.passport + " " + person.nationality + " " + person.category;
+                        var content = document.querySelector("#content");
+                        content.innerHTML = "";
+                        content.appendChild(p);
+                    }
+
+                });
+
+            }
+
+
+        }
+
+
+
+
+
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
