@@ -1,1 +1,1 @@
-It will be added as soon as possible.
+It is a simple web page for tourists to promote the Istanbul.
